@@ -39,7 +39,7 @@ findDynGenes<-function(expDat,
 
   ids = vector()
   for(grp in path){
-    ids = c(ids, as.vector(sampTab[sampTab$dpt_groups==grp,]$cell_name))
+    ids = as.numeric(c(ids, as.vector(sampTab[sampTab$dpt_groups==grp,]$cell_name))) #matrix indices need to be numeric?
   }
   #assumes cell_name is rownames of sampTab and colnames of expDat
   sampTab = sampTab[ids,]
