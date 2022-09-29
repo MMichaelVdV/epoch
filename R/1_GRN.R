@@ -47,14 +47,14 @@ findDynGenes<-function(expDat,
 
   if (method!="tradeseq"){
 	  t1 = sampTab$pseudotime
-	  names(t1) = as.vector(sampTab$cell_name)
+	  rownames(t1) = as.vector(sampTab$cell_name)
 
-	  t1C = t1[ids]
+	  t1C = t1[ids,]
 	  cat("starting gammma...\n")
-	  gpChr <-gamFit(expDat[,names(t1C)], rownames(expDat), t1C)
-	  cells = data.frame(cell_name = names(t1), pseudotime = t1, group = as.vector(sampTab$dpt_groups))
-	  rownames(cells)= names(t1)
-	  cells = cells[order(cells$pseudotime),]
+	  gpChr <-gamFit(expDat[,rownames(t1C)], rownames(expDat), t1C)
+	  cells<-data.frame(cell_name = sampTab$cell_name, pseudotime = sampTab$pseudotime, group = as.vector(sampTab$dpt_groups))
+	  rownames(cells)<-sampTab$cell_name
+	  cells<-cells[order(cells$latent_time),]
 
 	  ans <- list( genes = gpChr, cells = cells)
 	}else{
@@ -258,9 +258,3 @@ cn_extractRegsDF<-function#
   grn
 
 }
-
-
-
-
-
-
